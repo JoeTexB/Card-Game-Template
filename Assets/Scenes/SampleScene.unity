@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,13 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -67,9 +65,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 0
@@ -139,6 +134,10 @@ PrefabInstance:
     - target: {fileID: 139944937306382617, guid: 99ef4bccd68e84d9ba6e7c8051daf70b, type: 3}
       propertyPath: m_Name
       value: Blank_Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 139944937306382617, guid: 99ef4bccd68e84d9ba6e7c8051daf70b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 970200069765969068, guid: 99ef4bccd68e84d9ba6e7c8051daf70b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -236,6 +235,10 @@ PrefabInstance:
     - target: {fileID: 8449818770812260395, guid: 17e906621820045c3ab6aae59feeace5, type: 3}
       propertyPath: m_Name
       value: Orc_Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449818770812260395, guid: 17e906621820045c3ab6aae59feeace5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -363,7 +366,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee8c48878610400591dbc552a9c8d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck: []
+  deck:
+  - {fileID: 4608709814338197990, guid: 09e721dc5ec074753a4896ac692a6ea1, type: 3}
+  - {fileID: 4608709814338197990, guid: c167d2936712144e581ee596f3fba05d, type: 3}
+  - {fileID: 4608709814338197990, guid: c9af786ac043d4e8499972643847234e, type: 3}
+  - {fileID: 4608709814338197990, guid: 8a67819676ddc4ee99232871d4922bc7, type: 3}
+  - {fileID: 4608709814338197990, guid: 7bd2ba1740158442aa6f1c23fa808405, type: 3}
+  - {fileID: 4608709814338197990, guid: 64c270595c63749bab7ef3e203f75e97, type: 3}
+  - {fileID: 4608709814338197990, guid: 7b312e99ee9e84ce39dfdb2a25f25835, type: 3}
+  - {fileID: 4608709814338197990, guid: 5824ca72cd3034345abe4df72d5123cc, type: 3}
+  - {fileID: 4608709814338197990, guid: f13868df282e44b4aa74279db92f1b56, type: 3}
+  - {fileID: 4608709814338197990, guid: 8e63b6be819b5438a80da29c3ab0e42b, type: 3}
+  - {fileID: 4608709814338197990, guid: e87795cb2880c4f3a885a46103bef377, type: 3}
+  - {fileID: 4608709814338197990, guid: 0f405aa154d964d76aae6d9efa03b6b0, type: 3}
+  - {fileID: 4608709814338197990, guid: 49fe7b6f0967647259ed58bc40ea6a7f, type: 3}
+  - {fileID: 4608709814338197990, guid: 7902deb44a6764b18a5f483cc5aa667d, type: 3}
+  - {fileID: 4608709814338197990, guid: e8661294de054442094fb4fbdec3c8e2, type: 3}
+  - {fileID: 4608709814338197990, guid: 07a6639c9ccb84a8f98c30d0793a2ee6, type: 3}
+  - {fileID: 4608709814338197990, guid: 6d7ccbb28cd354fbf9464ad0037aec79, type: 3}
+  - {fileID: 4608709814338197990, guid: e245329d20e5849ebb6694b3f2a4a7dd, type: 3}
+  - {fileID: 4608709814338197990, guid: 254ba7f58e3e1460da43baa2880f41f0, type: 3}
+  - {fileID: 4608709814338197990, guid: 5f841bae30b274dc7ad045c0b7c67273, type: 3}
+  - {fileID: 4608709814338197990, guid: 23a1820b38fff4ac0911071331e783ab, type: 3}
+  - {fileID: 4608709814338197990, guid: 03f25ad956f894098b2deb94b52f3db8, type: 3}
+  - {fileID: 4608709814338197990, guid: ec7aad2b23a5f4526b372d278dc78368, type: 3}
+  - {fileID: 4608709814338197990, guid: e285babdeef40488183785f91d30c621, type: 3}
+  - {fileID: 4608709814338197990, guid: 9f0d95e098211456fb85e6d17a5be525, type: 3}
+  - {fileID: 4608709814338197990, guid: edff143a3606442d9a8faf8006972546, type: 3}
+  - {fileID: 4608709814338197990, guid: a9a8774cebec14782a1705b12fe3db52, type: 3}
+  - {fileID: 4608709814338197990, guid: 34deec174745d47ce86cd6fffd0f61a9, type: 3}
+  - {fileID: 4608709814338197990, guid: c8660a1e5a76345fb9c9ac15af58f1b1, type: 3}
+  - {fileID: 4608709814338197990, guid: f5a1463f4d0fc42258e262153287aaf2, type: 3}
+  - {fileID: 4608709814338197990, guid: 3f78435ddb634421f9841886ad148ee4, type: 3}
+  - {fileID: 4608709814338197990, guid: d5d94803639524a55959e8270176c043, type: 3}
+  - {fileID: 4608709814338197990, guid: ea165f4808c8a4ab6b0c5b1a8d329bbe, type: 3}
+  - {fileID: 4608709814338197990, guid: b356a0538c7d94cd3adb153fa4813500, type: 3}
+  - {fileID: 4608709814338197990, guid: a6608f598692a4422b520aba244f2179, type: 3}
+  - {fileID: 4608709814338197990, guid: e476c0370924346c4be92f0edb61cb71, type: 3}
+  - {fileID: 4608709814338197990, guid: 1c3aa4447069f4135952a8c4d58f4f7c, type: 3}
+  - {fileID: 4608709814338197990, guid: d6836238f0e414a2b96b20565758b2a9, type: 3}
+  - {fileID: 4608709814338197990, guid: 8a6356dfd9aee466b8902df52207dd2a, type: 3}
+  - {fileID: 4608709814338197990, guid: 47a91c36e53b44093b7f9900cfe3b5f6, type: 3}
+  - {fileID: 4608709814338197990, guid: 0d2c19645d107462e8887950e4c460ee, type: 3}
+  - {fileID: 4608709814338197990, guid: fb265d90b9fdf4df39a4aeee434a9add, type: 3}
+  - {fileID: 4608709814338197990, guid: cb1591fab42434846bc260695911c229, type: 3}
+  - {fileID: 4608709814338197990, guid: 4aec2877661534d7480bbdf9488b9d41, type: 3}
+  - {fileID: 4608709814338197990, guid: 957dc80a262e5405aa100a7a09604906, type: 3}
+  - {fileID: 4608709814338197990, guid: d5e04772396a14c24a1f3455e890b9ec, type: 3}
+  - {fileID: 4608709814338197990, guid: ff70804cf90be431098b957d5091d24e, type: 3}
+  - {fileID: 4608709814338197990, guid: dd34d5b2fcdb740c8a09f28f5ca0dd62, type: 3}
+  - {fileID: 4608709814338197990, guid: d524a7a4f132048c8af68ece7de64c4e, type: 3}
+  - {fileID: 4608709814338197990, guid: 99522783a56bb46e7be23c98e3e5d830, type: 3}
+  - {fileID: 4608709814338197990, guid: 75a438c2dbbc84c9496c95347b4dc959, type: 3}
+  - {fileID: 4608709814338197990, guid: 2f954a7780cdc4ec8b874e1d582cf7e3, type: 3}
   player_deck:
   - {fileID: 0}
   - {fileID: 0}
@@ -372,6 +427,8 @@ MonoBehaviour:
   player_hand: []
   ai_hand: []
   discard_pile: []
+  startPosition: {x: 0, y: 0, z: 0}
+  xOffset: 0
 --- !u!4 &622756966
 Transform:
   m_ObjectHideFlags: 0
