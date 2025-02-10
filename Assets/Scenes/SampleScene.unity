@@ -419,16 +419,14 @@ MonoBehaviour:
   - {fileID: 4608709814338197990, guid: 99522783a56bb46e7be23c98e3e5d830, type: 3}
   - {fileID: 4608709814338197990, guid: 75a438c2dbbc84c9496c95347b4dc959, type: 3}
   - {fileID: 4608709814338197990, guid: 2f954a7780cdc4ec8b874e1d582cf7e3, type: 3}
-  player_deck:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  ai_deck: []
   player_hand: []
   ai_hand: []
   discard_pile: []
   startPosition: {x: 0, y: 0, z: 0}
   xOffset: 0
+  cardPrefab: {fileID: 0}
+  canvasTransform: {fileID: 4002591297304670402}
+  Canvas: {x: 0, y: 0, z: 0}
 --- !u!4 &622756966
 Transform:
   m_ObjectHideFlags: 0
