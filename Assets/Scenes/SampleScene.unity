@@ -179,6 +179,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1834597192991454445, guid: 99ef4bccd68e84d9ba6e7c8051daf70b, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3415455958271070831, guid: 99ef4bccd68e84d9ba6e7c8051daf70b, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4608709814338197990, guid: 99ef4bccd68e84d9ba6e7c8051daf70b, type: 3}
+      propertyPath: cost
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7884059924108554137, guid: 99ef4bccd68e84d9ba6e7c8051daf70b, type: 3}
+      propertyPath: m_text
+      value: 'New tex
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -427,6 +445,8 @@ MonoBehaviour:
   cardPrefab: {fileID: 0}
   canvasTransform: {fileID: 4002591297304670402}
   Canvas: {x: 0, y: 0, z: 0}
+  VAiHand: {x: 0, y: 0}
+  VPlayerHand: {x: 0, y: 0}
 --- !u!4 &622756966
 Transform:
   m_ObjectHideFlags: 0

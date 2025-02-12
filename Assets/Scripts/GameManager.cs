@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
 
     public Vector3 Canvas;
 
+    public Vector2 VAiHand;
+
+    public Vector2 VPlayerHand;
+
+
     private void Awake()
     {
         Debug.Log("Awake method called.");
@@ -34,12 +39,19 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        VAiHand = new Vector2(0, 600);
+
+        VPlayerHand = new Vector2(0, 250);
+
         Debug.Log("Start method called.");
         InitializeDeck();
         Shuffle(); // Shuffle the deck before dealing
         Deal();
 
         Canvas = canvasTransform.position;
+
+        
     }
 
     // Update is called once per frame
@@ -104,6 +116,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 Debug.LogError("No cards left in the deck to deal to the AI.");
+
             }
         }
 
@@ -112,14 +125,19 @@ public class GameManager : MonoBehaviour
         foreach (Card card in player_hand)
         {
             Debug.Log(card.name);
-            Card.Instantiate(card, Canvas, Quaternion.identity);
+            GameObject newCard = Instantiate(card, Canvas , Quaternion.identity).gameObject;
+            newCard.transform.parent = canvasTransform;
+            newCard.transform.position = VPlayerHand /* new Vector2(0, 0)*/;
         }
 
         Debug.Log("AI hand contents:");
         foreach (Card card in ai_hand)
         {
             Debug.Log(card.name);
-            Card.Instantiate(card, Canvas, Quaternion.identity);
+            GameObject newCard = Instantiate(card, Canvas , Quaternion.identity).gameObject;
+            newCard.transform.parent = canvasTransform;
+            newCard.transform.position = VAiHand /*new Vector2(0, 0)*/;
+
         }
     }
 
@@ -148,3 +166,4 @@ public class GameManager : MonoBehaviour
         Debug.Log("Card removed from deck at index: " + index);
     }
 }
+
