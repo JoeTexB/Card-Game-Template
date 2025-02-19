@@ -21,6 +21,10 @@ public class GameManager : MonoBehaviour
 
     public Vector2 VPlayerHand;
 
+    public Vector2 CardShift;
+
+
+
 
     private void Awake()
     {
@@ -40,9 +44,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        VAiHand = new Vector2(0, 600);
+        VAiHand = new Vector2(-300, 600);
 
-        VPlayerHand = new Vector2(0, 250);
+        VPlayerHand = new Vector2(-300, 250);
+
+        CardShift = new Vector2(180, 0);
+    
 
         Debug.Log("Start method called.");
         InitializeDeck();
@@ -128,6 +135,7 @@ public class GameManager : MonoBehaviour
             GameObject newCard = Instantiate(card, Canvas , Quaternion.identity).gameObject;
             newCard.transform.parent = canvasTransform;
             newCard.transform.position = VPlayerHand /* new Vector2(0, 0)*/;
+            VPlayerHand.x += CardShift.x;
         }
 
         Debug.Log("AI hand contents:");
@@ -137,6 +145,7 @@ public class GameManager : MonoBehaviour
             GameObject newCard = Instantiate(card, Canvas , Quaternion.identity).gameObject;
             newCard.transform.parent = canvasTransform;
             newCard.transform.position = VAiHand /*new Vector2(0, 0)*/;
+            VAiHand.x += CardShift.x;
 
         }
     }
@@ -165,5 +174,18 @@ public class GameManager : MonoBehaviour
         deck[deck.Length - 1] = null;
         Debug.Log("Card removed from deck at index: " + index);
     }
+
+    
+
+    public void Hit()
+    {
+        print("Hit");
+    }
+
+    public void Stand()
+    {
+        print("Stand");
+    }
 }
+
 

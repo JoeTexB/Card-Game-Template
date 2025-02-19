@@ -27,7 +27,7 @@ public class Card : MonoBehaviour
     {
         card_name = data.card_name;
         description = data.description;
-        health = data.health;
+        health = data.cost;
         cost = data.cost;
         damage = data.damage;
         sprite = data.sprite;

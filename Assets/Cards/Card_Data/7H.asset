@@ -15,6 +15,6 @@ MonoBehaviour:
   card_name: 7H
   description: 
   health: 0
-  cost: 0
+  cost: 7
   damage: 0
-  sprite: {fileID: 2829232388215122354, guid: 70a7e51ab631942aa963fbeb1e9d3073, type: 3}
+  sprite: {fileID: 9111273550917137453, guid: 9ec7a7965521d43ca97c09bc0d4bce9b, type: 3}

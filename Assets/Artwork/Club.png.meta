@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 70a7e51ab631942aa963fbeb1e9d3073
+guid: f4871444e51db446eb0ca5994ad5a2fe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2829232388215122354
-    second: unnamed_0
+      213: -9010721128290583032
+    second: SuitClubs.svg_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: unnamed_0
+      name: SuitClubs.svg_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 230
-        height: 297
+        x: 3
+        y: 55
+        width: 634
+        height: 585
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2b9a79efdd3734720800000000000000
-      internalID: 2829232388215122354
+      spriteID: 80ef12aefdc73f280800000000000000
+      internalID: -9010721128290583032
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      unnamed_0: 2829232388215122354
+      SuitClubs.svg_0: -9010721128290583032
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

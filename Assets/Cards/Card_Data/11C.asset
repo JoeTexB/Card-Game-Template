@@ -15,6 +15,6 @@ MonoBehaviour:
   card_name: jC
   description: 
   health: 0
-  cost: 0
+  cost: 11
   damage: 0
-  sprite: {fileID: 2829232388215122354, guid: 70a7e51ab631942aa963fbeb1e9d3073, type: 3}
+  sprite: {fileID: -9010721128290583032, guid: f4871444e51db446eb0ca5994ad5a2fe, type: 3}

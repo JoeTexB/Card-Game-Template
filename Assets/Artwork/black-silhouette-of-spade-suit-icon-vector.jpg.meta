@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 70a7e51ab631942aa963fbeb1e9d3073
+guid: 2769ea599fd404f2bb3d289193f3c4ec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2829232388215122354
-    second: unnamed_0
+      213: 671550611118739825
+    second: black-silhouette-of-spade-suit-icon-vector_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: unnamed_0
+      name: black-silhouette-of-spade-suit-icon-vector_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 230
-        height: 297
+        width: 884
+        height: 980
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2b9a79efdd3734720800000000000000
-      internalID: 2829232388215122354
+      spriteID: 171dd6809b3d15900800000000000000
+      internalID: 671550611118739825
       vertices: []
       indices: 
       edges: []
@@ -173,8 +173,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      unnamed_0: 2829232388215122354
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
