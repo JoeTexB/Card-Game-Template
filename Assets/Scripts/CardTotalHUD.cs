@@ -9,12 +9,14 @@ public class PlayerCardTotal : MonoBehaviour
     
     public TextMeshProUGUI PlayerText;
     public TextMeshProUGUI AiText;
+    public TextMeshProUGUI WinnerText;
 
 
     void Start()
     {
+
         
-        
+
     }
 
     // Update is called once per frame
@@ -22,5 +24,8 @@ public class PlayerCardTotal : MonoBehaviour
     {
         PlayerText.text = "Player Score: " + GameManager.gm.PlayerTotal.ToString();
         AiText.text = "AI Score: " + GameManager.gm.AiTotal.ToString();
+        WinnerText.text = GameManager.gm.WinnerText;
+        
+       
     }
 }

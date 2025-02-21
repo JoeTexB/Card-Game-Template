@@ -28,12 +28,23 @@ public class GameManager : MonoBehaviour
 
     public Card AiCard;
 
+    public Card PlayerAce;
+
+    public Card AiAce;
+
     public int PlayerTotal;
 
     public int AiTotal;
 
     public bool AiTurn;
 
+    public GameObject EndGame;
+
+    public string WinnerText;
+
+    public bool PlayerS;
+
+    public bool AiS;
 
     private void Awake()
     {
@@ -64,7 +75,15 @@ public class GameManager : MonoBehaviour
         AiTotal = 0;
 
         AiTurn = false;
-    
+
+        PlayerS = false;
+
+        AiS = false;
+
+        
+
+        EndGame = GameObject.Find("EndGame");
+        EndGame.SetActive(false);
 
         Debug.Log("Start method called.");
         InitializeDeck();
@@ -81,11 +100,38 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerTotal > 21)
         {
-            PlayerBust();
+            
+                PlayerBust();
+
         }
         if (AiTotal > 21)
         {
-            AiBust();
+                AiBust();
+
+        }
+        if (PlayerS == true && AiS == true)
+        {
+            if (PlayerTotal > AiTotal)
+            {
+                if (PlayerTotal <= 21)
+                {
+                    EndGame.SetActive(true);
+                    WinnerText = "Player Wins!";
+                }
+            }
+            if (AiTotal > PlayerTotal)
+            {
+                if (AiTotal <= 21)
+                {
+                    EndGame.SetActive(true);
+                    WinnerText = "Ai Wins!";
+                }
+            }
+            if (AiTotal == PlayerTotal)
+            {
+                EndGame.SetActive(true);
+                WinnerText = "Draw, Ai Wins!";
+            }
         }
         
     }
@@ -124,6 +170,12 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Player card added to hand: " + playerCard.name);
                 RemoveCardFromDeck(0);
                 currentPosition.x += xOffset;
+                if (playerCard.name == "A")
+                {
+                    //name does not apear to be registering
+                    PlayerAce = playerCard;
+                    Debug.Log("Player Ace added to hand: " + playerCard.name + " " + playerCard.cost);
+                }
             }
             else
             {
@@ -140,6 +192,10 @@ public class GameManager : MonoBehaviour
                 Debug.Log("AI card added to hand: " + aiCard.name);
                 RemoveCardFromDeck(0);
                 currentPosition.x += xOffset;
+                if (aiCard.name == "A")
+                {
+                    AiAce = aiCard;
+                }
             }
             else
             {
@@ -230,6 +286,8 @@ public class GameManager : MonoBehaviour
     public void PlayerStand()
     {
         Debug.Log("Player stands!");
+        AiTurn = true;
+        PlayerS = true;
         
     }
 
@@ -246,17 +304,30 @@ public class GameManager : MonoBehaviour
     public void AiStand()
     {
         Debug.Log("Ai stands!");
+        AiS = true;
     }
     
     public void PlayerBust()
     {
+        EndGame.SetActive(true);
         Debug.Log("Player busts!");
+        if (AiTotal <= 21)
+        {
+            WinnerText = "Player Bust, Ai Wins!";
+        }
+            
     }
 
     public void AiBust()
     {
+        EndGame.SetActive(true);
         Debug.Log("AI busts!");
+        if (PlayerTotal <= 21)
+        {
+            WinnerText = "Ai Bust, Player Wins!";
+        }
     }
+
 }
     
 
