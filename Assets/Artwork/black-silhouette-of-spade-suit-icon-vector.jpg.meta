@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      black-silhouette-of-spade-suit-icon-vector_0: 671550611118739825
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

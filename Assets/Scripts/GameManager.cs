@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -23,7 +24,15 @@ public class GameManager : MonoBehaviour
 
     public Vector2 CardShift;
 
+    public Card PlayerCard;
 
+    public Card AiCard;
+
+    public int PlayerTotal;
+
+    public int AiTotal;
+
+    public bool AiTurn;
 
 
     private void Awake()
@@ -44,18 +53,24 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        VAiHand = new Vector2(-300, 600);
+        VAiHand = new Vector2(-300, 580);
 
-        VPlayerHand = new Vector2(-300, 250);
+        VPlayerHand = new Vector2(-300, 200);
 
         CardShift = new Vector2(180, 0);
+
+        PlayerTotal = 0;
+
+        AiTotal = 0;
+
+        AiTurn = false;
     
 
         Debug.Log("Start method called.");
         InitializeDeck();
         Shuffle(); // Shuffle the deck before dealing
         Deal();
-
+        
         Canvas = canvasTransform.position;
 
         
@@ -64,8 +79,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Debug log to verify Update is being called
-        // Debug.Log("Update method called.");
+        if (PlayerTotal > 21)
+        {
+            PlayerBust();
+        }
+        if (AiTotal > 21)
+        {
+            AiBust();
+        }
         
     }
 
@@ -131,21 +152,19 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player hand contents:");
         foreach (Card card in player_hand)
         {
-            Debug.Log(card.name);
-            GameObject newCard = Instantiate(card, Canvas , Quaternion.identity).gameObject;
-            newCard.transform.parent = canvasTransform;
-            newCard.transform.position = VPlayerHand /* new Vector2(0, 0)*/;
-            VPlayerHand.x += CardShift.x;
+            PlayerCard = card;
+            PlayerCardInstantiate();
+            
+            
         }
 
         Debug.Log("AI hand contents:");
         foreach (Card card in ai_hand)
         {
-            Debug.Log(card.name);
-            GameObject newCard = Instantiate(card, Canvas , Quaternion.identity).gameObject;
-            newCard.transform.parent = canvasTransform;
-            newCard.transform.position = VAiHand /*new Vector2(0, 0)*/;
-            VAiHand.x += CardShift.x;
+            AiCard = card;
+            AiCardInstantiate();
+            
+            
 
         }
     }
@@ -176,16 +195,68 @@ public class GameManager : MonoBehaviour
     }
 
     
-
-    public void Hit()
+    private void PlayerCardInstantiate()
     {
-        print("Hit");
+        Debug.Log(PlayerCard.name);
+        GameObject newCard = Instantiate(PlayerCard, Canvas, Quaternion.identity).gameObject;
+        newCard.transform.parent = canvasTransform;
+        newCard.transform.position = VPlayerHand /* new Vector2(0, 0)*/;
+        VPlayerHand.x += CardShift.x;
+        PlayerTotal += PlayerCard.data.cost;
+    }
+    private void AiCardInstantiate()
+    {
+        Debug.Log(AiCard.name);
+        GameObject newCard = Instantiate(AiCard, Canvas, Quaternion.identity).gameObject;
+        newCard.transform.parent = canvasTransform;
+        newCard.transform.position = VAiHand /*new Vector2(0, 0)*/;
+        VAiHand.x += CardShift.x;
+        AiTotal += AiCard.data.cost;
     }
 
-    public void Stand()
+    public void PlayerHit()
     {
-        print("Stand");
+        Debug.Log("Player hits!");
+        Card playerCard = deck[0];
+        player_hand.Add(playerCard);
+        Debug.Log("Player card added to hand: " + playerCard.name);
+        RemoveCardFromDeck(0);
+        PlayerCard = playerCard;
+        PlayerCardInstantiate();
+        AiTurn = true;
+        
+    }
+
+    public void PlayerStand()
+    {
+        Debug.Log("Player stands!");
+        
+    }
+
+    public void AiHit()
+    {
+        Card aiCard = deck[0];
+        aiCard.transform.SetParent(canvasTransform, false); // Set the parent to the Canvas
+        ai_hand.Add(aiCard);
+        Debug.Log("AI card added to hand: " + aiCard.name);
+        RemoveCardFromDeck(0);
+        AiCard = aiCard;
+        AiCardInstantiate();
+    }
+    public void AiStand()
+    {
+        Debug.Log("Ai stands!");
+    }
+    
+    public void PlayerBust()
+    {
+        Debug.Log("Player busts!");
+    }
+
+    public void AiBust()
+    {
+        Debug.Log("AI busts!");
     }
 }
-
+    
 
