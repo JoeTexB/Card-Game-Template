@@ -28,9 +28,9 @@ public class GameManager : MonoBehaviour
 
     public Card AiCard;
 
-    public Card PlayerAce;
+    public bool PlayerAce;
 
-    public Card AiAce;
+    public bool AiAce;
 
     public int PlayerTotal;
 
@@ -80,6 +80,10 @@ public class GameManager : MonoBehaviour
 
         AiS = false;
 
+        PlayerAce = false;
+
+        AiAce = false;
+
         
 
         EndGame = GameObject.Find("EndGame");
@@ -100,13 +104,28 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerTotal > 21)
         {
-            
+            if (PlayerAce == true)
+            {
+                PlayerTotal -= 10;
+                PlayerAce = false;
+            }
+            else
+            {
                 PlayerBust();
+            }
 
         }
         if (AiTotal > 21)
         {
+            if (AiAce == true)
+            {
+                AiTotal -= 10;
+                AiAce = false;
+            }
+            else
+            {
                 AiBust();
+            }
 
         }
         if (PlayerS == true && AiS == true)
@@ -170,12 +189,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Player card added to hand: " + playerCard.name);
                 RemoveCardFromDeck(0);
                 currentPosition.x += xOffset;
-                if (playerCard.name == "A")
-                {
-                    //name does not apear to be registering
-                    PlayerAce = playerCard;
-                    Debug.Log("Player Ace added to hand: " + playerCard.name + " " + playerCard.cost);
-                }
+                
             }
             else
             {
@@ -192,10 +206,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("AI card added to hand: " + aiCard.name);
                 RemoveCardFromDeck(0);
                 currentPosition.x += xOffset;
-                if (aiCard.name == "A")
-                {
-                    AiAce = aiCard;
-                }
+               
             }
             else
             {
@@ -259,6 +270,10 @@ public class GameManager : MonoBehaviour
         newCard.transform.position = VPlayerHand /* new Vector2(0, 0)*/;
         VPlayerHand.x += CardShift.x;
         PlayerTotal += PlayerCard.data.cost;
+        if (PlayerCard.data.cost == 11)
+        {
+            PlayerAce = true;
+        }
     }
     private void AiCardInstantiate()
     {
@@ -268,6 +283,10 @@ public class GameManager : MonoBehaviour
         newCard.transform.position = VAiHand /*new Vector2(0, 0)*/;
         VAiHand.x += CardShift.x;
         AiTotal += AiCard.data.cost;
+        if (AiCard.data.cost == 11)
+        {
+            AiAce = true;
+        }
     }
 
     public void PlayerHit()
@@ -279,7 +298,7 @@ public class GameManager : MonoBehaviour
         RemoveCardFromDeck(0);
         PlayerCard = playerCard;
         PlayerCardInstantiate();
-        AiTurn = true;
+        
         
     }
 
@@ -314,6 +333,7 @@ public class GameManager : MonoBehaviour
         if (AiTotal <= 21)
         {
             WinnerText = "Player Bust, Ai Wins!";
+            Destroy(GameManager.gm.gameObject);
         }
             
     }

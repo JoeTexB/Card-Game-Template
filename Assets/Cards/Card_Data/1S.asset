@@ -15,6 +15,6 @@ MonoBehaviour:
   card_name: A
   description: 
   health: 0
-  cost: 1
+  cost: 11
   damage: 0
-  sprite: {fileID: 671550611118739825, guid: 2769ea599fd404f2bb3d289193f3c4ec, type: 3}
+  sprite: {fileID: 1969666610233113485, guid: 9b7c7e5d81ce54c6e841b5fce4f8d719, type: 3}

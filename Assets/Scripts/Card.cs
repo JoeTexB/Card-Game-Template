@@ -25,11 +25,11 @@ public class Card : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        card_name = data.card_name;
+        card_name = "      " + data.card_name;
         description = data.description;
         health = data.cost;
         cost = data.cost;
-        damage = data.damage;
+        damage = data.cost;
         sprite = data.sprite;
         nameText.text = card_name;
         descriptionText.text = description;
