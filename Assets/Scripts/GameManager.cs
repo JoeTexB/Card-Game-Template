@@ -6,8 +6,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
-    public Card[] deck = new Card[52]; // Initializes an array of 52 Card objects
+    public Card[] deck = new Card[52];// Initializes an array of 52 Card objects
+    public Card[] jokerdeck = new Card[6];
     public List<Card> player_hand = new List<Card>();
+    public List<Card> joker_hand = new List<Card>();
     public List<Card> ai_hand = new List<Card>();
     public List<Card> discard_pile = new List<Card>();
 
@@ -40,11 +42,15 @@ public class GameManager : MonoBehaviour
 
     public GameObject EndGame;
 
+    public GameObject JokerHitButton;
+
     public string WinnerText;
 
     public bool PlayerS;
 
     public bool AiS;
+
+    public string jokers;
 
     private void Awake()
     {
@@ -88,6 +94,8 @@ public class GameManager : MonoBehaviour
 
         EndGame = GameObject.Find("EndGame");
         EndGame.SetActive(false);
+        JokerHitButton = GameObject.Find("JokerHit");
+        JokerHitButton.SetActive(false);
 
         Debug.Log("Start method called.");
         InitializeDeck();
@@ -102,6 +110,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerTotal < AiTotal)
+        {
+            if (PlayerTotal > 16)
+            {
+                if (AiTotal <= 21)
+                {
+                    JokerHitButton.SetActive(true);
+                }
+                
+            }
+        }
+        {
+
+        }
         if (PlayerTotal > 21)
         {
             if (PlayerAce == true)
@@ -152,7 +174,16 @@ public class GameManager : MonoBehaviour
                 WinnerText = "Draw, Ai Wins!";
             }
         }
+        if (jokers == "JOE" || jokers == "EOJ")
+        {
+            EndGame.SetActive(true);
+            WinnerText = jokers + " Player Wins!";
+        }
+        {
+
+        }
         
+
     }
 
     void InitializeDeck()
@@ -171,6 +202,7 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("Card prefab is not assigned.");
             }
         }
+
     }
 
     void Deal()
@@ -247,6 +279,13 @@ public class GameManager : MonoBehaviour
             deck[i] = deck[randomIndex];
             deck[randomIndex] = temp;
         }
+        for (int i = jokerdeck.Length - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            Card temp = jokerdeck[i];
+            jokerdeck[i] = jokerdeck[randomIndex];
+            jokerdeck[randomIndex] = temp;
+        }
     }
 
     void RemoveCardFromDeck(int index)
@@ -261,7 +300,19 @@ public class GameManager : MonoBehaviour
         Debug.Log("Card removed from deck at index: " + index);
     }
 
-    
+    void RemoveCardFromJokerDeck(int index)
+    {
+        Debug.Log("RemoveCardFromDeck method called.");
+        // Shift all cards to the left to remove the card at the specified index
+        for (int i = index; i < jokerdeck.Length - 1; i++)
+        {
+            jokerdeck[i] = jokerdeck[i + 1];
+        }
+        jokerdeck[jokerdeck.Length - 1] = null;
+        Debug.Log("Card removed from jokerdeck at index: " + index);
+    }
+
+
     private void PlayerCardInstantiate()
     {
         Debug.Log(PlayerCard.name);
@@ -302,6 +353,7 @@ public class GameManager : MonoBehaviour
         
     }
 
+  
     public void PlayerStand()
     {
         Debug.Log("Player stands!");
@@ -309,6 +361,25 @@ public class GameManager : MonoBehaviour
         PlayerS = true;
         
     }
+
+    public void PlayerHitJoker()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Debug.Log("Player hits joker!");
+            Card playerCard = jokerdeck[0];
+            player_hand.Add(playerCard);
+            joker_hand.Add(playerCard);
+            jokers = jokers + playerCard.name;
+            Debug.Log("Player card added to hand: " + playerCard.name);
+            RemoveCardFromJokerDeck(0);
+            PlayerCard = playerCard;
+            PlayerCardInstantiate();
+        }
+        
+        
+    }
+
 
     public void AiHit()
     {
@@ -333,7 +404,7 @@ public class GameManager : MonoBehaviour
         if (AiTotal <= 21)
         {
             WinnerText = "Player Bust, Ai Wins!";
-            Destroy(GameManager.gm.gameObject);
+            //Destroy(GameManager.gm.gameObject);
         }
             
     }

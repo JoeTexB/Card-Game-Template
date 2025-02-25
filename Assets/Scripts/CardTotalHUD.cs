@@ -44,7 +44,7 @@ public class PlayerCardTotal : MonoBehaviour
         {
             WinnerText.color = new Color(0,201,0,1);           
         }
-        if (GameManager.gm.WinnerText == "Player Wins!")
+        if (GameManager.gm.WinnerText == "Player Wins!" || GameManager.gm.WinnerText == "EOJ Player Wins!" || GameManager.gm.WinnerText == "JOE Player Wins!") 
         {
             WinnerText.color = new Color(0,201,0,1);
         }

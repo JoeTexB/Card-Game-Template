@@ -28,7 +28,7 @@ public class AIScript : MonoBehaviour
     {
         if (GameManager.gm.AiTurn == true)
         {
-            if (GameManager.gm.AiTotal <= 16)
+            if (GameManager.gm.AiTotal <= 16 && GameManager.gm.PlayerTotal <= 21)
             {
                 GameManager.gm.AiHit();
             }
@@ -41,6 +41,10 @@ public class AIScript : MonoBehaviour
                 if (GameManager.gm.PlayerTotal <= 21)
                 {
                     GameManager.gm.AiHit();
+                }
+                if (GameManager.gm.PlayerTotal > 21)
+                {
+                    GameManager.gm.AiStand();
                 }
             }
         }
