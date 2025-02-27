@@ -158,6 +158,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -460,7 +473,20 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Cards-Joker-Black_0: 7516781080498540210
+      Cards-Joker-Black_1: 651310481468927359
+      Cards-Joker-Black_10: -9214560247722380766
+      Cards-Joker-Black_11: 1446820102838314448
+      Cards-Joker-Black_12: 6906771072234213396
+      Cards-Joker-Black_2: 8335847276904893065
+      Cards-Joker-Black_3: -4212704772138448399
+      Cards-Joker-Black_4: -6951990360756700543
+      Cards-Joker-Black_5: 5647261485298657046
+      Cards-Joker-Black_6: 7522436008387179289
+      Cards-Joker-Black_7: 1055480114637066205
+      Cards-Joker-Black_8: 193209015799891118
+      Cards-Joker-Black_9: -6265641689562000240
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

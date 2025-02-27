@@ -70,9 +70,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        VAiHand = new Vector2(-300, 580);
+        VAiHand = new Vector2(-300, 600);
 
-        VPlayerHand = new Vector2(-300, 200);
+        VPlayerHand = new Vector2(-300, 220);
 
         CardShift = new Vector2(180, 0);
 
@@ -378,7 +378,7 @@ public class GameManager : MonoBehaviour
             PlayerCardInstantiate();
             
         }
-        JokerHitButton.SetActive(false);
+        Destroy(JokerHitButton);
 
 
     }
