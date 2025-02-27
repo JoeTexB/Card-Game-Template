@@ -172,6 +172,7 @@ public class GameManager : MonoBehaviour
             {
                 EndGame.SetActive(true);
                 WinnerText = "Draw, Ai Wins!";
+                JokerHitButton.SetActive(true);
             }
         }
         if (jokers == "JOE" || jokers == "EOJ")
@@ -375,9 +376,11 @@ public class GameManager : MonoBehaviour
             RemoveCardFromJokerDeck(0);
             PlayerCard = playerCard;
             PlayerCardInstantiate();
+            
         }
-        
-        
+        JokerHitButton.SetActive(false);
+
+
     }
 
 

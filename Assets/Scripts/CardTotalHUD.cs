@@ -50,10 +50,11 @@ public class PlayerCardTotal : MonoBehaviour
         }
         
         WinnerText.text = GameManager.gm.WinnerText;
-        
+
         
 
-       
+
+
     }
 }
             //WinnerText.color = new Color(0,201,0,1); //Green

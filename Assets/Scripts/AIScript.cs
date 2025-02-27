@@ -18,8 +18,9 @@ public class AIScript : MonoBehaviour
                 ActionCooldown -= Time.deltaTime;
                 if (ActionCooldown <= 0)
                 {
-                    ActionCooldown = 0.5f;
+                    ActionCooldown = 1f;
                     AiAction();
+                    
                 }
             }
     }
@@ -28,15 +29,15 @@ public class AIScript : MonoBehaviour
     {
         if (GameManager.gm.AiTurn == true)
         {
-            if (GameManager.gm.AiTotal <= 16 && GameManager.gm.PlayerTotal <= 21)
+            if (GameManager.gm.AiTotal <= 16 && GameManager.gm.PlayerTotal <= 21 || GameManager.gm.AiTotal < GameManager.gm.PlayerTotal && GameManager.gm.PlayerTotal <= 21)
             {
                 GameManager.gm.AiHit();
             }
-            if (GameManager.gm.AiTotal >= 17)
+            if (GameManager.gm.AiTotal >= 17 || GameManager.gm.PlayerTotal > 21)
             {
                 GameManager.gm.AiStand();
             }
-            if (GameManager.gm.AiTotal < GameManager.gm.PlayerTotal)
+            /*if (GameManager.gm.AiTotal < GameManager.gm.PlayerTotal)
             {
                 if (GameManager.gm.PlayerTotal <= 21)
                 {
@@ -45,8 +46,9 @@ public class AIScript : MonoBehaviour
                 if (GameManager.gm.PlayerTotal > 21)
                 {
                     GameManager.gm.AiStand();
-                }
+                } 
             }
+            */
         }
     }
 }

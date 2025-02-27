@@ -17,5 +17,6 @@ public class Button : MonoBehaviour
     public void JokerButtonPressed()
     {
         GameManager.gm.PlayerHitJoker();
+        
     }
 }
