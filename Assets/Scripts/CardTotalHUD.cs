@@ -26,35 +26,23 @@ public class PlayerCardTotal : MonoBehaviour
         PlayerText.text = "Player Score: " + GameManager.gm.PlayerTotal.ToString();
         AiText.text = "AI Score: " + GameManager.gm.AiTotal.ToString();
         
-        
-        if (GameManager.gm.WinnerText == "Player Bust, Ai Wins!")
-        {
-            WinnerText.color = new Color(255,0,0,1);
-        }
-        if (GameManager.gm.WinnerText == "Draw, Ai Wins!")
-        {
-            WinnerText.color = new Color(255,0,0,1);           
-        }
-        if (GameManager.gm.WinnerText == "Ai Wins!")
-        {
-            WinnerText.color = new Color(255,0,0,1);        
-        }
-        
-        if (GameManager.gm.WinnerText == "Ai Bust, Player Wins!")
-        {
-            WinnerText.color = new Color(0,201,0,1);           
-        }
-        if (GameManager.gm.WinnerText == "Player Wins!" || GameManager.gm.WinnerText == "EOJ Player Wins!" || GameManager.gm.WinnerText == "JOE Player Wins!") 
-        {
-            WinnerText.color = new Color(0,201,0,1);
-        }
-        
+        // Update the winner text first
         WinnerText.text = GameManager.gm.WinnerText;
-
         
-
-
-
+        // Then update the color based on the current text content
+        if (WinnerText.text.Contains("Ai Wins") || 
+            WinnerText.text.Contains("Player Bust"))
+        {
+            WinnerText.color = new Color(255, 0, 0, 1);
+        }
+        else if (WinnerText.text.Contains("Player Wins") || 
+                 WinnerText.text.Contains("Ai Bust"))
+        {
+            WinnerText.color = new Color(0, 201, 0, 1);
+        }
+        
+        // Force the text component to update immediately
+        WinnerText.ForceMeshUpdate();
     }
 }
             //WinnerText.color = new Color(0,201,0,1); //Green
