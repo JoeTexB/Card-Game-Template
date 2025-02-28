@@ -53,11 +53,22 @@ public class GameManager : MonoBehaviour
 
     public string jokers;
 
+    public int PlayerGames;
+
+    public int AiGames;
+
+    public bool jokerReset;
+
+    public GameObject HitButton;
+    public GameObject StandButton;
+
     private bool isResetting = false;
-    private float resetDelay = 10f;
+    private float resetDelay = 5f;
     private float resetCountdown;
     private bool countdownStarted = false;
     private string originalWinnerText;
+    private bool hasCountedWin = false;
+    private string pendingWinner = "";
 
     private void Awake()
     {
@@ -69,7 +80,7 @@ public class GameManager : MonoBehaviour
         else
         {
             gm = this;
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -88,11 +99,21 @@ public class GameManager : MonoBehaviour
         PlayerAce = false;
         AiAce = false;
         jokers = "";
-        
+        jokerReset = false;
         EndGame = GameObject.Find("EndGame");
-        EndGame.SetActive(false);
+        if (EndGame != null)
+        {
+            EndGame.SetActive(false);
+        }
+        
         JokerHitButton = GameObject.Find("JokerHit");
-        JokerHitButton.SetActive(false);
+        if (JokerHitButton != null)
+        {
+            JokerHitButton.SetActive(false);
+        }
+        
+        HitButton = GameObject.Find("Hit");
+        StandButton = GameObject.Find("Stand");
         
         Canvas = canvasTransform.position;
         resetCountdown = resetDelay;
@@ -112,20 +133,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerTotal < AiTotal)
-        {
-            if (PlayerTotal > 16)
-            {
-                if (AiTotal <= 21 && JokerHitButton != null)
-                {
-                    JokerHitButton.SetActive(true);
-                }
-                
-            }
-        }
-        {
-
-        }
         if (PlayerTotal > 21)
         {
             if (PlayerAce == true)
@@ -152,19 +159,62 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        if (PlayerS == true && AiS == true)
+
+        // Safer joker button check
+        try {
+            if (JokerHitButton == null) {
+                JokerHitButton = GameObject.Find("JokerHit");
+                if (JokerHitButton == null) {
+                    // Only log occasionally to avoid spam
+                    if (Time.frameCount % 60 == 0) {
+                        Debug.LogWarning("JokerHit button not found!");
+                    }
+                }
+            }
+            
+            if (JokerHitButton != null)
+            {
+                bool shouldShow = PlayerTotal == AiTotal && 
+                                  PlayerTotal >= 17 && 
+                                  PlayerTotal <= 21 && 
+                                  AiTotal <= 21;
+                
+                JokerHitButton.SetActive(shouldShow);
+            }
+        } catch (System.Exception e) {
+            Debug.LogError("Error handling joker button: " + e.Message);
+        }
+
+        // Only check for win conditions if:
+        // 1. Both players have stood, OR
+        // 2. Someone has busted
+        bool shouldCheckWinConditions = (PlayerS && AiS) || PlayerTotal > 21 || AiTotal > 21;
+
+        // Only check win conditions if the game should be over
+        if (shouldCheckWinConditions && !hasCountedWin)
         {
+            // First, set EndGame to true if both players have stood
+            if (PlayerS && AiS && !EndGame.activeSelf)
+            {
+                EndGame.SetActive(true);
+            }
+
+            // Then check all other win conditions
             if (!string.IsNullOrEmpty(jokers) && (jokers == "JOE" || jokers == "EOJ"))
             {
                 EndGame.SetActive(true);
                 WinnerText = jokers + " Player Wins!";
+                pendingWinner = "Player";
+                hasCountedWin = true;
             }
-            else if (PlayerTotal > AiTotal)
+            if (PlayerTotal > AiTotal)
             {
                 if (PlayerTotal <= 21)
                 {
                     EndGame.SetActive(true);
                     WinnerText = "Player Wins!";
+                    pendingWinner = "Player";
+                    hasCountedWin = true;
                 }
             }
             else if (AiTotal > PlayerTotal)
@@ -173,6 +223,8 @@ public class GameManager : MonoBehaviour
                 {
                     EndGame.SetActive(true);
                     WinnerText = "Ai Wins!";
+                    pendingWinner = "AI";
+                    hasCountedWin = true;
                 }
             }
             else if (AiTotal == PlayerTotal)
@@ -182,21 +234,27 @@ public class GameManager : MonoBehaviour
                     EndGame.SetActive(true);
                     WinnerText = "Draw, Ai Wins!";
                     originalWinnerText = WinnerText;
-                    countdownStarted = true;  // Start the countdown immediately
+                    countdownStarted = true;
                     resetCountdown = resetDelay;
+                    pendingWinner = "AI";
+                    hasCountedWin = true;
+                    
                 }
-                JokerHitButton.SetActive(true);
-            }
-        }
-        else if (!string.IsNullOrEmpty(jokers) && (jokers == "JOE" || jokers == "EOJ"))
-        {
-            EndGame.SetActive(true);
-            WinnerText = jokers + " Player Wins!";
-        }
-        {
 
+            }
+    
         }
-        
+
+        if (PlayerTotal >= 17 && jokerReset == false)
+        {
+            Debug.Log("JokerCheck 1 Player is above 17");
+            if (PlayerTotal == AiTotal || AiTotal > PlayerTotal && AiTotal <= 21)
+            {
+                Debug.Log("JokerCheck 2 Player meets joker criteria");
+                JokerHitButton.SetActive(true);
+            }   
+        }
+
         if (EndGame.activeSelf)
         {
             Debug.Log($"Countdown state: started={countdownStarted}, time={resetCountdown}");
@@ -211,6 +269,39 @@ public class GameManager : MonoBehaviour
             if (countdownStarted)
             {
                 resetCountdown = Mathf.Max(0, resetCountdown - Time.deltaTime);
+                
+                // Make sure we have a winner text before adding the countdown
+                if (string.IsNullOrEmpty(originalWinnerText))
+                {
+                    // Set a default winner text if it's missing
+                    if (PlayerTotal == AiTotal)
+                    {
+                        originalWinnerText = "Draw, Ai Wins!";
+                        pendingWinner = "AI";
+                    }
+                    else if (AiTotal > PlayerTotal && AiTotal <= 21)
+                    {
+                        originalWinnerText = "Ai Wins!";
+                        pendingWinner = "AI";
+                    }
+                    else if (PlayerTotal > AiTotal && PlayerTotal <= 21)
+                    {
+                        originalWinnerText = "Player Wins!";
+                        pendingWinner = "Player";
+                    }
+                    else if (PlayerTotal > 21)
+                    {
+                        originalWinnerText = "Player Bust, Ai Wins!";
+                        pendingWinner = "AI";
+                    }
+                    else if (AiTotal > 21)
+                    {
+                        originalWinnerText = "Ai Bust, Player Wins!";
+                        pendingWinner = "Player";
+                    }
+                }
+                
+                // Now add the countdown to the winner text
                 WinnerText = $"{originalWinnerText}\nResetting in: {Mathf.Ceil(resetCountdown)}";
                 
                 if (resetCountdown <= 0 && !isResetting)
@@ -385,8 +476,6 @@ public class GameManager : MonoBehaviour
         RemoveCardFromDeck(0);
         PlayerCard = playerCard;
         PlayerCardInstantiate();
-        
-        
     }
 
   
@@ -396,10 +485,31 @@ public class GameManager : MonoBehaviour
         AiTurn = true;
         PlayerS = true;
         
+        // Deactivate Hit and Stand buttons
+        GameObject hitButton = GameObject.Find("Hit");
+        GameObject standButton = GameObject.Find("Stand");
+        
+        if (hitButton != null)
+        {
+            hitButton.SetActive(false);
+        }
+        
+        if (standButton != null)
+        {
+            standButton.SetActive(false);
+        }
     }
 
     public void PlayerHitJoker()
     {
+        // Immediately deactivate the joker button at the start of the method
+        if (JokerHitButton != null)
+        {
+            JokerHitButton.SetActive(false);
+            jokerReset = true;
+            Debug.Log("Joker button deactivated immediately on click");
+        }
+        
         for (int i = 0; i < 3; i++)
         {
             Debug.Log("Player hits joker!");
@@ -413,35 +523,52 @@ public class GameManager : MonoBehaviour
             PlayerCardInstantiate();
         }
         
-        if (JokerHitButton != null)
+        // Check for winning joker combinations immediately
+        if (jokers == "JOE" || jokers == "EOJ")
         {
-            JokerHitButton.SetActive(false);
+            EndGame.SetActive(true);
+            WinnerText = jokers + " Player Wins!";
+            originalWinnerText = WinnerText;
+            pendingWinner = "Player";
+            hasCountedWin = true;
+            countdownStarted = true;
+            resetCountdown = resetDelay;
         }
-        
-        if (EndGame.activeSelf)
+        // Always check other win conditions after joker is played
+        else
         {
+            // Make sure EndGame is active
+            EndGame.SetActive(true);
             countdownStarted = true;
             resetCountdown = resetDelay;
             
-            if (jokers == "JOE" || jokers == "EOJ")
-            {
-                WinnerText = jokers + " Player Wins!";
-                originalWinnerText = WinnerText;
-            }
-            else if (PlayerTotal == AiTotal)
+            if (PlayerTotal == AiTotal)
             {
                 WinnerText = "Draw, Ai Wins!";
                 originalWinnerText = WinnerText;
+                pendingWinner = "AI";
+                hasCountedWin = true;
             }
             else if (AiTotal > PlayerTotal && AiTotal <= 21)
             {
                 WinnerText = "Ai Wins!";
                 originalWinnerText = WinnerText;
+                pendingWinner = "AI";
+                hasCountedWin = true;
             }
             else if (PlayerTotal > AiTotal && PlayerTotal <= 21)
             {
                 WinnerText = "Player Wins!";
                 originalWinnerText = WinnerText;
+                pendingWinner = "Player";
+                hasCountedWin = true;
+            }
+            else if (PlayerTotal > 21)
+            {
+                WinnerText = "Player Bust, Ai Wins!";
+                originalWinnerText = WinnerText;
+                pendingWinner = "AI";
+                hasCountedWin = true;
             }
         }
     }
@@ -450,7 +577,7 @@ public class GameManager : MonoBehaviour
     public void AiHit()
     {
         Card aiCard = deck[0];
-        aiCard.transform.SetParent(canvasTransform, false); // Set the parent to the Canvas
+        aiCard.transform.SetParent(canvasTransform, false);
         ai_hand.Add(aiCard);
         Debug.Log("AI card added to hand: " + aiCard.name);
         RemoveCardFromDeck(0);
@@ -465,23 +592,31 @@ public class GameManager : MonoBehaviour
     
     public void PlayerBust()
     {
-        EndGame.SetActive(true);
-        Debug.Log("Player busts!");
-        if (AiTotal <= 21)
+        if (!hasCountedWin)
         {
-            WinnerText = "Player Bust, Ai Wins!";
-            //Destroy(GameManager.gm.gameObject);
+            EndGame.SetActive(true);
+            Debug.Log("Player busts!");
+            if (AiTotal <= 21)
+            {
+                WinnerText = "Player Bust, Ai Wins!";
+                pendingWinner = "AI";
+                hasCountedWin = true;
+            }
         }
-            
     }
 
     public void AiBust()
     {
-        EndGame.SetActive(true);
-        Debug.Log("AI busts!");
-        if (PlayerTotal <= 21)
+        if (!hasCountedWin)
         {
-            WinnerText = "Ai Bust, Player Wins!";
+            EndGame.SetActive(true);
+            Debug.Log("AI busts!");
+            if (PlayerTotal <= 21)
+            {
+                WinnerText = "Ai Bust, Player Wins!";
+                pendingWinner = "Player";
+                hasCountedWin = true;
+            }
         }
     }
 
@@ -489,9 +624,17 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         
+        // Reset the win counting flag
+        hasCountedWin = false;
+        
+        // Reset jokerReset flag
+        jokerReset = false;
+        Debug.Log("Reset jokerReset flag to false");
+        
         // Destroy all instantiated card clones in the canvas
         foreach (Transform child in canvasTransform)
         {
+            // Only destroy card objects, not UI elements
             if (child.GetComponent<Card>() != null)
             {
                 Destroy(child.gameObject);
@@ -573,18 +716,66 @@ public class GameManager : MonoBehaviour
         VAiHand = new Vector2(-300, 600);
         VPlayerHand = new Vector2(-300, 220);
         
-        // Reset UI
+        // Reset UI and buttons
         EndGame.SetActive(false);
+        
+        // Just deactivate the joker button, don't destroy it
         if (JokerHitButton != null)
         {
             JokerHitButton.SetActive(false);
+            Debug.Log("Deactivated JokerHit button during reset");
         }
+        else
+        {
+            // Try to find it if we don't have a reference
+            JokerHitButton = GameObject.Find("JokerHit");
+            if (JokerHitButton != null)
+            {
+                JokerHitButton.SetActive(false);
+                Debug.Log("Found and deactivated JokerHit button during reset");
+            }
+        }
+        
+        // Reactivate Hit and Stand buttons using stored references
+        if (HitButton != null)
+        {
+            HitButton.SetActive(true);
+        }
+        else
+        {
+            HitButton = GameObject.Find("Hit");
+            if (HitButton != null) HitButton.SetActive(true);
+        }
+        
+        if (StandButton != null)
+        {
+            StandButton.SetActive(true);
+        }
+        else
+        {
+            StandButton = GameObject.Find("Stand");
+            if (StandButton != null) StandButton.SetActive(true);
+        }
+        
         WinnerText = "";
         countdownStarted = false;
 
         // Shuffle and deal
         Shuffle();
         Deal();
+
+        // Count the wins at the end of the round
+        if (pendingWinner == "Player")
+        {
+            PlayerGames++;
+            Debug.Log("Player wins counted - Total wins: " + PlayerGames);
+        }
+        else if (pendingWinner == "AI")
+        {
+            AiGames++;
+            Debug.Log("AI wins counted - Total wins: " + AiGames);
+        }
+        pendingWinner = "";  // Reset for next game
     }
 }
     

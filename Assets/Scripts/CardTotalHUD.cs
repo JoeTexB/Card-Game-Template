@@ -9,6 +9,8 @@ public class PlayerCardTotal : MonoBehaviour
     
     public TextMeshProUGUI PlayerText;
     public TextMeshProUGUI AiText;
+    public TextMeshProUGUI PlayerGamesText;
+    public TextMeshProUGUI AiGamesText;
     public TextMeshProUGUI WinnerText;
 
 
@@ -25,7 +27,9 @@ public class PlayerCardTotal : MonoBehaviour
     {
         PlayerText.text = "Player Score: " + GameManager.gm.PlayerTotal.ToString();
         AiText.text = "AI Score: " + GameManager.gm.AiTotal.ToString();
-        
+        PlayerGamesText.text = "Won: " + GameManager.gm.PlayerGames.ToString();
+        AiGamesText.text = "Lost: " + GameManager.gm.AiGames.ToString();
+
         // Update the winner text first
         WinnerText.text = GameManager.gm.WinnerText;
         
