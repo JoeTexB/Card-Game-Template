@@ -538,7 +538,7 @@ public class GameManager : MonoBehaviour
         else
         {
             // Make sure EndGame is active
-            EndGame.SetActive(true);
+            EndGame.SetActive(true); //reactivate this if does not end/function
             countdownStarted = true;
             resetCountdown = resetDelay;
             
@@ -571,6 +571,8 @@ public class GameManager : MonoBehaviour
                 hasCountedWin = true;
             }
         }
+        HitButton.SetActive(false);
+        StandButton.SetActive(false);
     }
 
 
